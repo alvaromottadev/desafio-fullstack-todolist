@@ -15,4 +15,10 @@ export class TasksService {
     const task = this.taskRepository.create(createTaskDto);
     return this.taskRepository.save(task);
   }
+
+  findAllTasks() {
+    return this.taskRepository.find({
+      order: { createdAt: 'DESC' },
+    });
+  }
 }
