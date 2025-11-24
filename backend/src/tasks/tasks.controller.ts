@@ -10,23 +10,24 @@ import {
 import { CreateTaskDto } from './dto/create-task.dto';
 import { TasksService } from './tasks.service';
 import { UpdateTaskDto } from './dto/update-task.dto';
+import { Task } from './entities/task.entity';
 
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Post()
-  createTask(@Body() createTaskDto: CreateTaskDto) {
+  createTask(@Body() createTaskDto: CreateTaskDto): Promise<Task> {
     return this.tasksService.createTask(createTaskDto);
   }
 
   @Get()
-  findAllTasks() {
+  findAllTasks(): Promise<Task[]> {
     return this.tasksService.findAllTasks();
   }
 
   @Get(':id')
-  findTaskById(@Param('id', ParseUUIDPipe) id: string) {
+  findTaskById(@Param('id', ParseUUIDPipe) id: string): Promise<Task> {
     return this.tasksService.findTaskById(id);
   }
 
@@ -34,7 +35,7 @@ export class TasksController {
   updateTask(
     @Param('id', ParseUUIDPipe) id: string,
     @Body() updateTaskDto: UpdateTaskDto,
-  ) {
+  ): Promise<Task> {
     return this.tasksService.updateTask(id, updateTaskDto);
   }
 }

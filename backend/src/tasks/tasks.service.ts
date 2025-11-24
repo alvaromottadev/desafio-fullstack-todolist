@@ -12,25 +12,28 @@ export class TasksService {
     private readonly taskRepository: Repository<Task>,
   ) {}
 
-  createTask(createTaskDto: CreateTaskDto) {
-    const task = this.taskRepository.create(createTaskDto);
+  createTask(createTaskDto: CreateTaskDto): Promise<Task> {
+    const task: Task = this.taskRepository.create(createTaskDto);
     return this.taskRepository.save(task);
   }
 
-  findAllTasks() {
+  findAllTasks(): Promise<Task[]> {
     return this.taskRepository.find({
       order: { createdAt: 'DESC' },
     });
   }
 
-  async findTaskById(id: string) {
-    const task = await this.taskRepository.findOneBy({ id });
+  async findTaskById(id: string): Promise<Task> {
+    const task: Task | null = await this.taskRepository.findOneBy({ id });
+
     if (!task) throw new NotFoundException(`Task with ID ${id} not found.`);
+
     return task;
   }
 
   async updateTask(id: string, updateTaskDto: UpdateTaskDto): Promise<Task> {
     const task: Task = await this.findTaskById(id);
+
     this.taskRepository.merge(task, updateTaskDto);
     return this.taskRepository.save(task);
   }
