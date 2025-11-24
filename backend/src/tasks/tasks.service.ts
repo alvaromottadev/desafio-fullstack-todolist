@@ -37,4 +37,9 @@ export class TasksService {
     this.taskRepository.merge(task, updateTaskDto);
     return this.taskRepository.save(task);
   }
+
+  async removeTask(id: string): Promise<void> {
+    const task: Task = await this.findTaskById(id);
+    await this.taskRepository.remove(task);
+  }
 }
