@@ -20,6 +20,9 @@ export class Task {
   @Column({ nullable: false, default: false })
   isDone: boolean;
 
+  @Column({ nullable: true })
+  dueDate?: Date;
+
   @CreateDateColumn()
   createdAt: Date;
 
