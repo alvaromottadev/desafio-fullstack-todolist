@@ -1,0 +1,10 @@
+services:
+  postgresql:
+    image: postgres:latest
+    container_name: todolist_db
+    environment:
+      POSTGRES_USER: todo_user
+      POSTGRES_PASSWORD: todo_password
+      POSTGRES_DB: todolist_db
+    ports:
+      - '5432:5432'
