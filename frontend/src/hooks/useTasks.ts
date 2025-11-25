@@ -37,11 +37,12 @@ export const useTasks = () => {
       setIsLoading(true);
       try {
         const response = await clientApi
-          .put<TaskResponseDTO>(`/tasks/${id}`, updateTaskDTO)
+          .patch<TaskResponseDTO>(`/tasks/${id}`, updateTaskDTO)
           .then((res) => res.data);
         setTasks((prevTasks) =>
           prevTasks.map((task) => (task.id === id ? response : task))
         );
+        return response;
       } finally {
         setIsLoading(false);
       }
