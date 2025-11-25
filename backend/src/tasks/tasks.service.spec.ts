@@ -15,7 +15,6 @@ describe('TasksService', () => {
   let createTaskDto: CreateTaskDto;
   let updateTaskDto: UpdateTaskDto;
   let createdTask: Task;
-  let updatedTask: Task;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -55,11 +54,6 @@ describe('TasksService', () => {
       dueDate: undefined,
       updatedAt: new Date(),
       createdAt: new Date(),
-    };
-    updatedTask = {
-      ...createdTask,
-      ...updateTaskDto,
-      dueDate: undefined,
     };
   });
 
@@ -129,6 +123,12 @@ describe('TasksService', () => {
   describe('updateTask', () => {
     it('should update task with success', async () => {
       jest.spyOn(tasksService, 'findTaskById').mockResolvedValue(createdTask);
+
+      const updatedTask = {
+        ...createdTask,
+        ...updateTaskDto,
+        dueDate: undefined,
+      };
 
       tasksRepository.merge.mockReturnValue(updatedTask);
       tasksRepository.save.mockResolvedValue(updatedTask);
