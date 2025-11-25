@@ -5,7 +5,7 @@ export const TaskTitle = () => {
   const iconSize: number = 40;
 
   return (
-    <div className="flex items-center flex-col gap-y-2">
+    <div className="flex items-center flex-col gap-y-2 mb-[0.5rem] mt-[1rem]">
       <div className="flex gap-x-2">
         <ClipboardCheck size={iconSize} color="white" />
         <Title className="text-white  text-shadow-2xl">Task Manager</Title>
