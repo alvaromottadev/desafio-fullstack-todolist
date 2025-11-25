@@ -1,5 +1,12 @@
+import { Route, Routes } from "react-router-dom";
+import { TasksPage } from "./pages/TasksPage";
+
 function App() {
-  return <h1>Hello, World!</h1>;
+  return (
+    <Routes>
+      <Route index element={<TasksPage />} />
+    </Routes>
+  );
 }
 
 export default App;
