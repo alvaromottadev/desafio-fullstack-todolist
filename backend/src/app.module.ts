@@ -15,6 +15,7 @@ import Joi from '@hapi/joi';
         DB_NAME: Joi.string().required(),
         DB_AUTOLOADENTITIES: Joi.boolean().required(),
         DB_SYNCHRONIZE: Joi.boolean().required(),
+        CORS_ORIGIN: Joi.string().required(),
       }),
     }),
     TypeOrmModule.forRootAsync({
