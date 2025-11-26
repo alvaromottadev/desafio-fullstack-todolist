@@ -40,7 +40,19 @@ Certifique-se de ter instalado:
 
 ## ⚡ Como rodar a aplicação
 
-1. ⚙ Criar arquivo `.env`
+1. Clone o repositório e acesse o diretório do backend
+
+```
+git clone https://github.com/alvaromottadev/desafio-fullstack-todolist.git
+```
+
+Após clonar use:
+
+```
+cd backend
+```
+
+2. ⚙ Criar arquivo `.env`
 
 Crie o arquivo `.env` na raiz do backend ou remova o `.example` do `.env.example` e utilize ele.
 
@@ -62,7 +74,7 @@ PORT=3000
 
 Observação: O `DB_SYNCHRONIZE` true é só para desenvolvimento. Nunca use synchronize: true em produção, ele altera o schema automaticamente e pode causar perda de dados.
 
-2. 🧩 Instale as dependências
+3. 🧩 Instale as dependências
 
 Instale as dependências utilizando o comando no `desafio-fullstack-todolist/backend`
 
@@ -70,7 +82,7 @@ Instale as dependências utilizando o comando no `desafio-fullstack-todolist/bac
 npm install
 ```
 
-3. 🐘 Subir o Banco de Dados com Docker
+4. 🐘 Subir o Banco de Dados com Docker
 
 Abra o Docker e suba o PostgreSQL usando Docker Compose:
 
@@ -80,7 +92,7 @@ docker compose up -d
 
 Obs.: Você pode usar o script `npm run start:docker` também, ele irá subir o banco com docker e iniciar a API.
 
-4. ▶ Inicie a aplicação
+5. ▶ Inicie a aplicação
 
 Agora você pode iniciar a API com algum desses comandos:
 

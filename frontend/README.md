@@ -43,11 +43,21 @@ Certifique-se de ter instalado:
 
 - npm
 
-- Docker + Docker Compose
-
 ## ⚡ Como rodar a aplicação
 
-1. ⚙ Criar arquivo `.env`
+1. Clone o repositório e acesse o diretório do frontend
+
+```
+git clone https://github.com/alvaromottadev/desafio-fullstack-todolist.git
+```
+
+Após clonar use:
+
+```
+cd frontend
+```
+
+2. ⚙ Criar arquivo `.env`
 
 Crie o arquivo `.env` na raiz do frontend ou remova o `.example` do `.env.example` e utilize ele.
 
@@ -59,7 +69,7 @@ Exemplo de arquivo `.env`:
 VITE_API_URL=http://localhost:3000
 ```
 
-2. 🧩 Instale as dependências
+3. 🧩 Instale as dependências
 
 Instale as dependências utilizando o comando no diretório `desafio-fullstack-todolist/frontend`
 
@@ -67,7 +77,7 @@ Instale as dependências utilizando o comando no diretório `desafio-fullstack-t
 npm install
 ```
 
-3. ▶ Inicie a aplicação
+4. ▶ Inicie a aplicação
 
 Agora você pode iniciar o frontend em ambiente de desenvolvimento:
 
@@ -79,57 +89,36 @@ O frontend estará disponível em:
 
 👉 http://localhost:5173
 
-## 🗺️ Rotas da API
+## 📱 Responsividade (Mobile-First)
 
-A API expõe o CRUD completo da entidade Task.
+Toda a interface foi desenvolvida seguindo o conceito mobile-first, garantindo:
 
-| Método | Rota         | Descrição                      | Corpo da Requisição                           |
-| ------ | ------------ | ------------------------------ | --------------------------------------------- |
-| POST   | `/tasks`     | Criar nova tarefa              | `{ title, description, dueDate }`             |
-| GET    | `/tasks`     | Listar todas as tarefas        | —                                             |
-| GET    | `/tasks/:id` | Buscar tarefa por ID           | —                                             |
-| PATCH  | `/tasks/:id` | Atualizar uma tarefa existente | `{ title?, description?, isDone?, dueDate? }` |
-| DELETE | `/tasks/:id` | Remover uma tarefa             | —                                             |
+- Melhor usabilidade em telas pequenas
 
-Você pode testar pelo `Insomnia` ou `Postman` ou através da documentação `Swagger` disponivel em:
+- Layout fluido
 
-👉 http://localhost:3000/docs
+- Componentes adaptados
 
-## 🧪 Testes
+- Uso de breakpoints estratégicos no Tailwind
 
-Para executar os testes unitários use:
+## 🧠 Funcionalidades Implementadas
 
-```
-npm run test
-```
-
-## 🔒 Validação e Tratamento de Erros
-
-Este projeto utiliza:
-
-- DTOs com decorators do Class Validator
-
-- Pipes globais (ValidationPipe)
-
-- Exceções do NestJS (HttpException, NotFoundException, etc.)
-
-- Services contendo a lógica de negócio
-
-- Controllers apenas recebendo/parando requisições
+- Listar tarefas
+- Criar tarefas
+- Editar tarefas
+- Excluir tarefas
+- Marcar/desmarcar como concluída
+- Exibir métricas (total, concluídas, pendentes)
+- UI responsiva (mobile-first)
+- Dialogs e AlertDialog com shadcn/ui
 
 ## ⚠️ Observações para o Revisor
 
-- O projeto segue arquitetura modular do NestJS.
+- O código está organizado em componentes reutilizáveis e otimizados.
 
-- As regras de negócio estão contidas no Service.
+- A comunicação com o backend está centralizada e tipada.
 
-- Validações são realizadas por DTOs.
-
-- A comunicação com o banco utiliza TypeORM com repositórios.
-
-- Exceções apropriadas são retornadas para erros como task não encontrada.
-
-- O banco deve estar ativo via Docker antes de iniciar a API.
+- UI projetada com precisão, mantendo consistência visual e acessibilidade.
 
 ## 📄 Licença
 
