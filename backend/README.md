@@ -49,7 +49,7 @@ git clone https://github.com/alvaromottadev/desafio-fullstack-todolist.git
 Após clonar use:
 
 ```
-cd backend
+cd desafio-fullstack-todolist\backend
 ```
 
 2. ⚙ Criar arquivo `.env`
