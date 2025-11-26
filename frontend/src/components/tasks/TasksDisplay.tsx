@@ -1,7 +1,7 @@
 import type { TaskResponseDTO } from "@/types/TaskResponseDTO";
 import { Text } from "../common/Text";
 import { ClipboardCheck, ListTodo } from "lucide-react";
-import { TaskDialog, TaskCard } from "./index";
+import { TaskDialog, TaskCard, FilterTask } from "./index";
 import type { TaskCreateDTO } from "@/types/TaskCreateDTO";
 import { Button } from "../ui/button";
 import type { TaskUpdateDTO } from "@/types/TaskUpdateDTO";
@@ -34,9 +34,6 @@ export const TasksDisplay = ({
   filter,
   setFilter,
 }: TasksDisplayProps) => {
-  const isActive = (value: FilterType) => {
-    return filter === value && "bg-[var(--primary-color-hover)]";
-  };
   return (
     <div className="w-[90%] lg:w-[50rem] max-w-4xl mx-auto">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -47,44 +44,7 @@ export const TasksDisplay = ({
           </div>
         </div>
 
-        <div className="p-6 border-b border-[var(--primary-color)]">
-          <div className="flex items-center justify-center">
-            <div className="flex gap-3">
-              <Button
-                onClick={() => setFilter("all")}
-                variant="ghost"
-                className={`
-          py-1 px-4 font-medium border rounded-lg hover:bg-[var(--primary-color-hover)]
-          ${isActive("all")}
-        `}
-              >
-                Todas
-              </Button>
-
-              <Button
-                onClick={() => setFilter("pending")}
-                variant="ghost"
-                className={`
-          py-1 px-4 font-medium border rounded-lg hover:bg-[var(--primary-color-hover)]
-          ${isActive("pending")}
-        `}
-              >
-                Pendentes
-              </Button>
-
-              <Button
-                onClick={() => setFilter("completed")}
-                variant="ghost"
-                className={`
-          py-1 px-4 font-medium border rounded-lg hover:bg-[var(--primary-color-hover)]
-          ${isActive("completed")}
-        `}
-              >
-                Concluídas
-              </Button>
-            </div>
-          </div>
-        </div>
+        <FilterTask filter={filter} setFilter={setFilter} />
 
         <div className="p-6">
           <div className="mb-6">
