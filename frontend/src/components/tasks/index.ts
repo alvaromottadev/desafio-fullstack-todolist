@@ -5,3 +5,4 @@ export * from "./TasksDisplay";
 export * from "./TaskDialog";
 export * from "./DeleteTaskAlert";
 export * from "./FilterTask";
+export * from "./RequiredInput";
