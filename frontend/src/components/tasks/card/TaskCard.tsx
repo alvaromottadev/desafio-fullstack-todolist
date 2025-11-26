@@ -19,6 +19,9 @@ interface TaskCardProps {
   isLoading: boolean;
 }
 
+/*
+This component displays a task card with details such as title, description, status, creation date, and due date.
+*/
 export const TaskCard = ({
   task,
   onToggle,

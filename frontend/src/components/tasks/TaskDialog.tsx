@@ -48,6 +48,9 @@ interface TaskDialogProps {
   isLoading: boolean;
 }
 
+/*
+This component provides a dialog for creating or updating tasks. It includes a form with fields for title, description, due date, and status.
+*/
 export const TaskDialog = ({
   children,
   initialTaskDto,

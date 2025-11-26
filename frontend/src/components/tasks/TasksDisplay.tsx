@@ -18,6 +18,9 @@ interface TasksDisplayProps {
   isLoading: boolean;
 }
 
+/*
+This component displays a list of tasks with options to create, update, and remove tasks.
+*/
 export const TasksDisplay = ({
   tasks,
   onToggle,

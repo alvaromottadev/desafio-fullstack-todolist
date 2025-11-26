@@ -17,6 +17,9 @@ interface DeleteTaskAlertProps {
   id: string;
 }
 
+/*
+This component displays a confirmation alert dialog for deleting a task.
+*/
 export const DeleteTaskAlert = ({
   children,
   onRemove,
