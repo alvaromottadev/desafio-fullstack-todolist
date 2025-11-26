@@ -1,98 +1,163 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 📌 API de Gerenciamento de Tarefas — Backend (NestJS)
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Este repositório contém o backend da aplicação Todo List, desenvolvido como parte do Desafio Prático de Desenvolvimento Full Stack.
+A API fornece operações CRUD completas para gerenciamento de tarefas, seguindo boas práticas de arquitetura do NestJS.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## 🚀 Tecnologias Utilizadas
 
-## Description
+- **TypeScript**
+- **Node.js**
+- **NestJS**
+- **TypeORM**
+- **PostgreSQL**
+- **Docker & Docker Compose**
+- **Class Validator / Class Transformer**
+- **Swagger**
+- **Jest**
+- **Nest CLI**
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## 🧩 Estrutura da Entidade Task
 
-## Project setup
+| Campo         | Tipo         | Descrição                                           |
+| ------------- | ------------ | --------------------------------------------------- |
+| `id`          | UUID         | Identificador único da tarefa                       |
+| `title`       | string       | Título da tarefa                                    |
+| `description` | string       | Descrição detalhada                                 |
+| `isDone`      | boolean      | Indica se a tarefa está concluída (padrão: `false`) |
+| `dueDate`     | Date \| null | Data de vencimento da tarefa (opcional)             |
+| `createdAt`   | Date         | Timestamp automático de criação                     |
+| `updatedAt`   | Date         | Timestamp automático da última atualização          |
 
-```bash
-$ npm install
+## 🛠️ Requisitos de Instalação
+
+Certifique-se de ter instalado:
+
+- Node.js 18+
+
+- npm
+
+- Docker + Docker Compose
+
+## ⚡ Como rodar a aplicação
+
+1. Clone o repositório e acesse o diretório do backend
+
+```
+git clone https://github.com/alvaromottadev/desafio-fullstack-todolist.git
 ```
 
-## Compile and run the project
+Após clonar use:
 
-```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+cd backend
 ```
 
-## Run tests
+2. ⚙ Criar arquivo `.env`
 
-```bash
-# unit tests
-$ npm run test
+Crie o arquivo `.env` na raiz do backend ou remova o `.example` do `.env.example` e utilize ele.
 
-# e2e tests
-$ npm run test:e2e
+Os valores presentes no arquivo .env.example correspondem às configurações do banco de dados Postgres utilizado via Docker Compose e à URL padrão do frontend configurado com Vite. **Essas credenciais são destinadas exclusivamente ao ambiente de desenvolvimento e não representam risco de segurança**, por isso podem ser expostas no arquivo de exemplo. Caso você não utilize o banco de dados fornecido pelo Docker Compose, lembre-se de atualizar esses valores conforme o ambiente desejado.
 
-# test coverage
-$ npm run test:cov
+Exemplo de arquivo `.env`:
+
+```
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=todo_user
+DB_PASSWORD=todo_password
+DB_NAME=todolist_db
+DB_AUTOLOADENTITIES=true
+DB_SYNCHRONIZE=true
+CORS_ORIGIN=http://localhost:5173
+PORT=3000
 ```
 
-## Deployment
+Observação: O `DB_SYNCHRONIZE` true é só para desenvolvimento. Nunca use synchronize: true em produção, ele altera o schema automaticamente e pode causar perda de dados.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+3. 🧩 Instale as dependências
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+Instale as dependências utilizando o comando no `desafio-fullstack-todolist/backend`
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+```
+npm install
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+4. 🐘 Subir o Banco de Dados com Docker
 
-## Resources
+Abra o Docker e suba o PostgreSQL usando Docker Compose:
 
-Check out a few resources that may come in handy when working with NestJS:
+```
+docker compose up -d
+```
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+Obs.: Você pode usar o script `npm run start:docker` também, ele irá subir o banco com docker e iniciar a API.
 
-## Support
+5. ▶ Inicie a aplicação
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Agora você pode iniciar a API com algum desses comandos:
 
-## Stay in touch
+```
+npm run start
+npm run start:dev -> Em modo desenvolvimento
+npm run start:docker -> Sobe o docker junto
+```
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+A API estará disponível em:
 
-## License
+👉 http://localhost:3000
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+## 🗺️ Rotas da API
+
+A API expõe o CRUD completo da entidade Task.
+
+| Método | Rota         | Descrição                      | Corpo da Requisição                           |
+| ------ | ------------ | ------------------------------ | --------------------------------------------- |
+| POST   | `/tasks`     | Criar nova tarefa              | `{ title, description, dueDate }`             |
+| GET    | `/tasks`     | Listar todas as tarefas        | —                                             |
+| GET    | `/tasks/:id` | Buscar tarefa por ID           | —                                             |
+| PATCH  | `/tasks/:id` | Atualizar uma tarefa existente | `{ title?, description?, isDone?, dueDate? }` |
+| DELETE | `/tasks/:id` | Remover uma tarefa             | —                                             |
+
+Você pode testar pelo `Insomnia` ou `Postman` ou através da documentação `Swagger` disponivel em:
+
+👉 http://localhost:3000/docs
+
+## 🧪 Testes
+
+Para executar os testes unitários use:
+
+```
+npm run test
+```
+
+## 🔒 Validação e Tratamento de Erros
+
+Este projeto utiliza:
+
+- DTOs com decorators do Class Validator
+
+- Pipes globais (ValidationPipe)
+
+- Exceções do NestJS (HttpException, NotFoundException, etc.)
+
+- Services contendo a lógica de negócio
+
+- Controllers apenas recebendo/parando requisições
+
+## ⚠️ Observações para o Revisor
+
+- O projeto segue arquitetura modular do NestJS.
+
+- As regras de negócio estão contidas no Service.
+
+- Validações são realizadas por DTOs.
+
+- A comunicação com o banco utiliza TypeORM com repositórios.
+
+- Exceções apropriadas são retornadas para erros como task não encontrada.
+
+- O banco deve estar ativo via Docker antes de iniciar a API.
+
+## 📄 Licença
+
+Este projeto está sob a licença MIT.
