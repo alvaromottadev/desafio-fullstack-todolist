@@ -1,5 +1,5 @@
 import { Text } from "../common/Text";
-import icon from "../../../public/icon.png";
+import icon from "../../assets/icon.png";
 
 /*
 This component displays the title section for the task management application, including an icon and a subtitle.
