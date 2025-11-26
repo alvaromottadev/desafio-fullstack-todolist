@@ -35,10 +35,10 @@ export const TasksDisplay = ({
   setFilter,
 }: TasksDisplayProps) => {
   const isActive = (value: FilterType) => {
-    return filter === value ? "bg-[var(--primary-color-hover)]" : "bg-white";
+    return filter === value && "bg-[var(--primary-color-hover)]";
   };
   return (
-    <div className="w-[90%] lg:w-[50rem] max-w-4xl mx-auto ">
+    <div className="w-[90%] lg:w-[50rem] max-w-4xl mx-auto">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--accent-color)] p-6">
           <div className="flex items-center gap-3 text-white">
@@ -54,7 +54,7 @@ export const TasksDisplay = ({
                 onClick={() => setFilter("all")}
                 variant="ghost"
                 className={`
-          py-1 px-4 font-medium border rounded-lg transition-all duration-200
+          py-1 px-4 font-medium border rounded-lg hover:bg-[var(--primary-color-hover)]
           ${isActive("all")}
         `}
               >
@@ -65,7 +65,7 @@ export const TasksDisplay = ({
                 onClick={() => setFilter("pending")}
                 variant="ghost"
                 className={`
-          py-1 px-4 font-medium border rounded-lg transition-all duration-200
+          py-1 px-4 font-medium border rounded-lg hover:bg-[var(--primary-color-hover)]
           ${isActive("pending")}
         `}
               >
@@ -76,7 +76,7 @@ export const TasksDisplay = ({
                 onClick={() => setFilter("completed")}
                 variant="ghost"
                 className={`
-          py-1 px-4 font-medium border rounded-lg transition-all duration-200
+          py-1 px-4 font-medium border rounded-lg hover:bg-[var(--primary-color-hover)]
           ${isActive("completed")}
         `}
               >
