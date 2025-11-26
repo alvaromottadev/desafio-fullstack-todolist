@@ -36,6 +36,7 @@ import { ChevronDownIcon } from "lucide-react";
 import { UpdateTaskSchema } from "@/zod/UpdateTaskSchema";
 import { Checkbox } from "../ui/checkbox";
 import { Text } from "../common";
+import { RequiredInput } from "./RequiredInput";
 
 interface TaskDialogProps {
   children: ReactNode;
@@ -138,7 +139,9 @@ export const TaskDialog = ({
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="font-bold">Título</FormLabel>
+                  <FormLabel className="font-bold">
+                    Título <RequiredInput />
+                  </FormLabel>
                   <FormControl>
                     <Input placeholder="Ex.: Comprar pão" {...field} />
                   </FormControl>
@@ -152,7 +155,9 @@ export const TaskDialog = ({
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <FormLabel className="font-bold">Descrição</FormLabel>
+                    <FormLabel className="font-bold">
+                      Descrição <RequiredInput />
+                    </FormLabel>
                     <FormControl>
                       <Input
                         placeholder="Ex.: Ir na rua comprar pão"
