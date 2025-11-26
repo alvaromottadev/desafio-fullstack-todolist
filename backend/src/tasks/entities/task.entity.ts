@@ -23,9 +23,13 @@ export class Task {
   @Column({ nullable: true })
   dueDate?: Date;
 
-  @CreateDateColumn()
+  @CreateDateColumn({
+    type: 'timestamptz',
+  })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({
+    type: 'timestamptz',
+  })
   updatedAt: Date;
 }
