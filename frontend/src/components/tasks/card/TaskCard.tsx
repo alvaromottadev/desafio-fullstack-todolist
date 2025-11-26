@@ -1,15 +1,31 @@
 import type { TaskResponseDTO } from "@/types/TaskResponseDTO";
-import { Title } from "../common/Title";
-import { Text } from "../common/Text";
+import { Title } from "../../common";
+import { Text } from "../../common";
 import { Calendar, Clock } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { TaskDialog } from "../index";
+import { Button } from "@/components/ui/button";
+import type { TaskUpdateDTO } from "@/types/TaskUpdateDTO";
+import { DeleteTaskAlert } from "../index";
 
 interface TaskCardProps {
   task: TaskResponseDTO;
   onToggle?: (taskId: string) => void;
+  onUpdate: (
+    id: string,
+    taskUpdateDto: TaskUpdateDTO
+  ) => Promise<TaskResponseDTO>;
+  onRemove: (id: string) => Promise<void>;
+  isLoading: boolean;
 }
 
-export const TaskCard = ({ task, onToggle }: TaskCardProps) => {
+export const TaskCard = ({
+  task,
+  onToggle,
+  onUpdate,
+  onRemove,
+  isLoading,
+}: TaskCardProps) => {
   const formatDate = (date: Date) => {
     return new Date(date).toLocaleDateString("pt-BR", {
       day: "2-digit",
@@ -41,7 +57,7 @@ export const TaskCard = ({ task, onToggle }: TaskCardProps) => {
             className="mt-1"
           />
           <Title
-            className={`text-xl ${
+            className={`text-xl truncate ${
               task.isDone
                 ? "text-gray-500 line-through"
                 : "text-[var(--primary-color)]"
@@ -49,11 +65,22 @@ export const TaskCard = ({ task, onToggle }: TaskCardProps) => {
           >
             {task.title}
           </Title>
+          <div className="mt-3 flex items-center gap-2 mr-0 justify-end self-end ml-auto ">
+            <span
+              className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                task.isDone
+                  ? "bg-green-100 text-green-700"
+                  : "bg-yellow-100 text-yellow-700"
+              }`}
+            >
+              {task.isDone ? "✅ Concluída" : "⏳ Pendente"}
+            </span>
+          </div>
         </div>
       </div>
 
       {task.description && (
-        <Text className="text-gray-600 mb-4 line-clamp-2">
+        <Text className="text-gray-600 mb-4 line-clamp-2 truncate">
           {task.description}
         </Text>
       )}
@@ -80,17 +107,21 @@ export const TaskCard = ({ task, onToggle }: TaskCardProps) => {
           <span>✏️ Atualizado: {formatDate(task.updatedAt)}</span>
         </div>
       )}
-
-      <div className="mt-3 flex items-center gap-2">
-        <span
-          className={`px-3 py-1 rounded-full text-xs font-semibold ${
-            task.isDone
-              ? "bg-green-100 text-green-700"
-              : "bg-yellow-100 text-yellow-700"
-          }`}
+      <div className="space-x-2">
+        <TaskDialog
+          isLoading={isLoading}
+          initialTaskDto={task}
+          onUpdate={onUpdate}
         >
-          {task.isDone ? "✅ Concluída" : "⏳ Pendente"}
-        </span>
+          <Button className="mt-2 bg-[var(--background-color)] cursor-pointer">
+            Editar
+          </Button>
+        </TaskDialog>
+        <DeleteTaskAlert onRemove={onRemove} id={task.id}>
+          <Button variant={"destructive"} className="cursor-pointer">
+            Excluir
+          </Button>
+        </DeleteTaskAlert>
       </div>
     </div>
   );

@@ -6,6 +6,8 @@
 :root {
   --font-sans: "Helvetica", sans-serif;
   --primary-color: #1b6735;
+  --primary-color-hover: #22c55e;
+  --accent-color: #22c55e;
   --background-color: #1b6735;
   --background-card: #f8f9fa;
   --radius: 0.625rem;

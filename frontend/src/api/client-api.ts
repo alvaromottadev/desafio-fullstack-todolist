@@ -15,7 +15,7 @@ clientApi.interceptors.response.use(
     if (error.response) {
       const { status, data } = error.response;
       if (status != 201 && status != 204 && status != 200) {
-        toast.error(data.error || "An error ocurred");
+        toast.error(data.message || "An error ocurred");
       }
     }
     return Promise.reject(error);

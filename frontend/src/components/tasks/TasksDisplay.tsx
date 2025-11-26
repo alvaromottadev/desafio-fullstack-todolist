@@ -1,17 +1,33 @@
 import type { TaskResponseDTO } from "@/types/TaskResponseDTO";
 import { Text } from "../common/Text";
 import { ClipboardCheck, ListTodo } from "lucide-react";
-import { CreateTaskButton } from "./CreateTaskButton";
-import { TaskCard } from "./TaskCard";
+import { TaskDialog, TaskCard } from "./index";
+import type { TaskCreateDTO } from "@/types/TaskCreateDTO";
+import { Button } from "../ui/button";
+import type { TaskUpdateDTO } from "@/types/TaskUpdateDTO";
 
 interface TasksDisplayProps {
   tasks: TaskResponseDTO[];
   onToggle: (taskId: string) => void;
+  onCreate: (taskCreateDto: TaskCreateDTO) => Promise<TaskResponseDTO>;
+  onUpdate: (
+    id: string,
+    taskUpdateDto: TaskUpdateDTO
+  ) => Promise<TaskResponseDTO>;
+  onRemove: (id: string) => Promise<void>;
+  isLoading: boolean;
 }
 
-export const TasksDisplay = ({ tasks, onToggle }: TasksDisplayProps) => {
+export const TasksDisplay = ({
+  tasks,
+  onToggle,
+  onCreate,
+  onUpdate,
+  onRemove,
+  isLoading,
+}: TasksDisplayProps) => {
   return (
-    <div className="w-full lg:w-[47rem] max-w-4xl mx-auto px-4">
+    <div className="w-[90%] lg:w-[50rem] max-w-4xl mx-auto ">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="bg-gradient-to-r from-[var(--primary-color)] to-green-500 p-6">
           <div className="flex items-center gap-3 text-white">
@@ -22,7 +38,16 @@ export const TasksDisplay = ({ tasks, onToggle }: TasksDisplayProps) => {
 
         <div className="p-6">
           <div className="mb-6">
-            <CreateTaskButton />
+            <TaskDialog
+              initialTaskDto={null}
+              onCreate={onCreate}
+              onUpdate={onUpdate}
+              isLoading={isLoading}
+            >
+              <Button className="w-full bg-[var(--primary-color)] hover:bg-[var(--primary-color-hover)] text-white font-bold py-2 px-4 hover:-translate-y-1 transition-transform duration-200 rounded cursor-pointer">
+                Criar Tarefa
+              </Button>
+            </TaskDialog>
           </div>
 
           {tasks.length === 0 ? (
@@ -40,7 +65,14 @@ export const TasksDisplay = ({ tasks, onToggle }: TasksDisplayProps) => {
           ) : (
             <div className="space-y-4 max-h-[calc(100vh-28rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-gray-100">
               {tasks.map((task) => (
-                <TaskCard task={task} key={task.id} onToggle={onToggle} />
+                <TaskCard
+                  onRemove={onRemove}
+                  onUpdate={onUpdate}
+                  task={task}
+                  key={task.id}
+                  onToggle={onToggle}
+                  isLoading={isLoading}
+                />
               ))}
             </div>
           )}

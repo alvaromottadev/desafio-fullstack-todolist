@@ -3,6 +3,7 @@ import clientApi from "../api/client-api";
 import type { TaskResponseDTO } from "../types/TaskResponseDTO";
 import type { TaskCreateDTO } from "@/types/TaskCreateDTO";
 import type { TaskUpdateDTO } from "@/types/TaskUpdateDTO";
+import { toast } from "sonner";
 
 export const useTasks = () => {
   const [tasks, setTasks] = useState<TaskResponseDTO[]>([]);
@@ -25,8 +26,12 @@ export const useTasks = () => {
     try {
       const response = await clientApi
         .post<TaskResponseDTO>("/tasks", taskCreateDTO)
-        .then((res) => res.data);
-      setTasks((prevTasks) => [...prevTasks, response]);
+        .then((res) => {
+          toast.success("Tarefa criada com sucesso!");
+          return res.data;
+        });
+      setTasks((prevTasks) => [response, ...prevTasks]);
+      return response;
     } finally {
       setIsLoading(false);
     }
@@ -38,7 +43,10 @@ export const useTasks = () => {
       try {
         const response = await clientApi
           .patch<TaskResponseDTO>(`/tasks/${id}`, updateTaskDTO)
-          .then((res) => res.data);
+          .then((res) => {
+            toast.success("Tarefa atualizada com sucesso!");
+            return res.data;
+          });
         setTasks((prevTasks) =>
           prevTasks.map((task) => (task.id === id ? response : task))
         );
@@ -49,6 +57,18 @@ export const useTasks = () => {
     },
     []
   );
+
+  const removeTask = useCallback(async (id: string) => {
+    setIsLoading(true);
+    try {
+      await clientApi.delete(`/tasks/${id}`).then(() => {
+        toast.success("Tarefa removida com sucesso!");
+      });
+      setTasks((prevTasks) => prevTasks.filter((task) => task.id !== id));
+    } finally {
+      setIsLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
     fetchTasks();
@@ -61,5 +81,13 @@ export const useTasks = () => {
     return { total, completed, pending };
   }, [tasks]);
 
-  return { tasks, isLoading, fetchTasks, createTask, updateTask, stats };
+  return {
+    tasks,
+    isLoading,
+    fetchTasks,
+    createTask,
+    updateTask,
+    removeTask,
+    stats,
+  };
 };
