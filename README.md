@@ -127,6 +127,12 @@ Cada repositório (backend e frontend) possui seu próprio **README** com detalh
 git clone https://github.com/alvaromottadev/desafio-fullstack-todolist.git
 ```
 
+Acesse a pasta:
+
+```
+cd .\desafio-fullstack-todolist\
+```
+
 Cada módulo (backend e frontend) possui um arquivo `.env.example` contendo valores padrão de desenvolvimento.
 
 Para que a aplicação funcione corretamente, é necessário renomear esse arquivo para `.env`
