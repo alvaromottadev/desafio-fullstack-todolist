@@ -1,13 +1,14 @@
 import type { TaskResponseDTO } from "@/types/TaskResponseDTO";
 import { Text } from "../common/Text";
 import { ClipboardCheck, ListTodo } from "lucide-react";
-import { TaskDialog, TaskCard } from "./index";
+import { TaskDialog, TaskCard, FilterTask } from "./index";
 import type { TaskCreateDTO } from "@/types/TaskCreateDTO";
 import { Button } from "../ui/button";
 import type { TaskUpdateDTO } from "@/types/TaskUpdateDTO";
+import type { FilterType } from "@/types/FilterType";
 
 interface TasksDisplayProps {
-  tasks: TaskResponseDTO[];
+  filteredTasks: TaskResponseDTO[];
   onToggle: (taskId: string) => void;
   onCreate: (taskCreateDto: TaskCreateDTO) => Promise<TaskResponseDTO>;
   onUpdate: (
@@ -15,6 +16,8 @@ interface TasksDisplayProps {
     taskUpdateDto: TaskUpdateDTO
   ) => Promise<TaskResponseDTO>;
   onRemove: (id: string) => Promise<void>;
+  setFilter: (filter: FilterType) => void;
+  filter: FilterType;
   isLoading: boolean;
 }
 
@@ -22,15 +25,17 @@ interface TasksDisplayProps {
 This component displays a list of tasks with options to create, update, and remove tasks.
 */
 export const TasksDisplay = ({
-  tasks,
+  filteredTasks,
   onToggle,
   onCreate,
   onUpdate,
   onRemove,
   isLoading,
+  filter,
+  setFilter,
 }: TasksDisplayProps) => {
   return (
-    <div className="w-[90%] lg:w-[50rem] max-w-4xl mx-auto ">
+    <div className="w-[90%] lg:w-[50rem] max-w-4xl mx-auto">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
         <div className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--accent-color)] p-6">
           <div className="flex items-center gap-3 text-white">
@@ -38,6 +43,8 @@ export const TasksDisplay = ({
             <Text className="text-2xl font-bold">Minhas Tarefas</Text>
           </div>
         </div>
+
+        <FilterTask filter={filter} setFilter={setFilter} />
 
         <div className="p-6">
           <div className="mb-6">
@@ -53,7 +60,7 @@ export const TasksDisplay = ({
             </TaskDialog>
           </div>
 
-          {tasks.length === 0 ? (
+          {filteredTasks.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-16 px-4">
               <div className="bg-[var(--background-color)] rounded-full p-6 mb-4">
                 <ListTodo size={64} className="text-white" />
@@ -67,7 +74,7 @@ export const TasksDisplay = ({
             </div>
           ) : (
             <div className="space-y-4 max-h-[calc(100vh-28rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-gray-100">
-              {tasks.map((task) => (
+              {filteredTasks.map((task) => (
                 <TaskCard
                   onRemove={onRemove}
                   onUpdate={onUpdate}
