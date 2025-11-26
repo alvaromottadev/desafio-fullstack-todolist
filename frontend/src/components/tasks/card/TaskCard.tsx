@@ -116,12 +116,15 @@ export const TaskCard = ({
           initialTaskDto={task}
           onUpdate={onUpdate}
         >
-          <Button className="mt-2 bg-[var(--background-color)] cursor-pointer">
+          <Button className="mt-2 bg-[var(--background-color)] hover:bg-[var(--accent-color)] cursor-pointer">
             Editar
           </Button>
         </TaskDialog>
         <DeleteTaskAlert onRemove={onRemove} id={task.id}>
-          <Button variant={"destructive"} className="cursor-pointer">
+          <Button
+            variant={"destructive"}
+            className="hover:bg-transparent hover:text-red-500 cursor-pointer "
+          >
             Excluir
           </Button>
         </DeleteTaskAlert>

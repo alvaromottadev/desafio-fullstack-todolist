@@ -238,7 +238,7 @@ export const TaskDialog = ({
           <DialogClose asChild>
             <Button
               variant={"destructive"}
-              className={`cursor-pointer ${
+              className={`hover:bg-transparent hover:text-red-500 cursor-pointer ${
                 isLoading && "opacity-50 cursor-not-allowed"
               }`}
               onClick={onClose}

@@ -32,7 +32,7 @@ export const TasksDisplay = ({
   return (
     <div className="w-[90%] lg:w-[50rem] max-w-4xl mx-auto ">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-        <div className="bg-gradient-to-r from-[var(--primary-color)] to-green-500 p-6">
+        <div className="bg-gradient-to-r from-[var(--primary-color)] to-[var(--accent-color)] p-6">
           <div className="flex items-center gap-3 text-white">
             <ClipboardCheck size={28} />
             <Text className="text-2xl font-bold">Minhas Tarefas</Text>
@@ -47,7 +47,7 @@ export const TasksDisplay = ({
               onUpdate={onUpdate}
               isLoading={isLoading}
             >
-              <Button className="w-full bg-[var(--primary-color)] hover:bg-[var(--primary-color-hover)] text-white font-bold py-2 px-4 hover:-translate-y-1 transition-transform duration-200 rounded cursor-pointer">
+              <Button className="w-full bg-[var(--primary-color)] hover:bg-[var(--primary-color-hover)] bg-gradient-to-r from-[var(--primary-color)] to-[var(--accent-color)] text-white font-bold py-2 px-4 hover:-translate-y-1 transition-transform duration-200 rounded cursor-pointer">
                 Criar Tarefa
               </Button>
             </TaskDialog>
