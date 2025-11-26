@@ -1,24 +1,8 @@
 import { StatsCard, TasksDisplay, TaskTitle } from "../components/tasks";
-import { useTasks } from "../hooks/useTasks";
+import { useTasksContext } from "@/hooks/useTasksContext";
 
 export const TasksPage = () => {
-  const {
-    stats,
-    filteredTasks,
-    updateTask,
-    createTask,
-    removeTask,
-    isLoading,
-    setFilter,
-    filter,
-  } = useTasks();
-
-  const handleToggleTask = async (taskId: string) => {
-    const task = filteredTasks.find((t) => t.id === taskId);
-    if (task) {
-      await updateTask(taskId, { isDone: !task.isDone });
-    }
-  };
+  const { stats } = useTasksContext();
 
   return (
     <div className="flex flex-col min-h-screen items-center justify-center bg-linear-to-r from-[var(--primary-color)] to-[var(--accent-color)] p-2">
@@ -28,16 +12,7 @@ export const TasksPage = () => {
         <StatsCard value={stats.completed} label="Tarefas Concluidas" />
         <StatsCard value={stats.pending} label="Tarefas Pendentes" />
       </div>
-      <TasksDisplay
-        filteredTasks={filteredTasks}
-        onToggle={handleToggleTask}
-        onCreate={createTask}
-        onUpdate={updateTask}
-        onRemove={removeTask}
-        isLoading={isLoading}
-        setFilter={setFilter}
-        filter={filter}
-      />
+      <TasksDisplay />
     </div>
   );
 };

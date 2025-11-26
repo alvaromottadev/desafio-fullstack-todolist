@@ -1,39 +1,30 @@
-import type { TaskResponseDTO } from "@/types/TaskResponseDTO";
 import { Text } from "../common/Text";
 import { ClipboardCheck, ListTodo } from "lucide-react";
 import { TaskDialog, TaskCard, FilterTask } from "./index";
-import type { TaskCreateDTO } from "@/types/TaskCreateDTO";
 import { Button } from "../ui/button";
-import type { TaskUpdateDTO } from "@/types/TaskUpdateDTO";
-import type { FilterType } from "@/types/FilterType";
-
-interface TasksDisplayProps {
-  filteredTasks: TaskResponseDTO[];
-  onToggle: (taskId: string) => void;
-  onCreate: (taskCreateDto: TaskCreateDTO) => Promise<TaskResponseDTO>;
-  onUpdate: (
-    id: string,
-    taskUpdateDto: TaskUpdateDTO
-  ) => Promise<TaskResponseDTO>;
-  onRemove: (id: string) => Promise<void>;
-  setFilter: (filter: FilterType) => void;
-  filter: FilterType;
-  isLoading: boolean;
-}
+import { useTasksContext } from "@/hooks/useTasksContext";
 
 /*
 This component displays a list of tasks with options to create, update, and remove tasks.
 */
-export const TasksDisplay = ({
-  filteredTasks,
-  onToggle,
-  onCreate,
-  onUpdate,
-  onRemove,
-  isLoading,
-  filter,
-  setFilter,
-}: TasksDisplayProps) => {
+export const TasksDisplay = () => {
+  const {
+    filteredTasks,
+    createTask,
+    updateTask,
+    removeTask,
+    isLoading,
+    filter,
+    setFilter,
+  } = useTasksContext();
+
+  const onToggle = async (taskId: string) => {
+    const task = filteredTasks.find((t) => t.id === taskId);
+    if (task) {
+      await updateTask(taskId, { isDone: !task.isDone });
+    }
+  };
+
   return (
     <div className="w-[90%] lg:w-[50rem] max-w-4xl mx-auto">
       <div className="bg-white rounded-xl shadow-lg overflow-hidden">
@@ -50,8 +41,8 @@ export const TasksDisplay = ({
           <div className="mb-6">
             <TaskDialog
               initialTaskDto={null}
-              onCreate={onCreate}
-              onUpdate={onUpdate}
+              onCreate={createTask}
+              onUpdate={updateTask}
               isLoading={isLoading}
             >
               <Button className="w-full bg-[var(--primary-color)] hover:bg-[var(--primary-color-hover)] bg-gradient-to-r from-[var(--primary-color)] to-[var(--accent-color)] text-white font-bold py-2 px-4 hover:-translate-y-1 transition-transform duration-200 rounded cursor-pointer">
@@ -76,8 +67,8 @@ export const TasksDisplay = ({
             <div className="space-y-4 max-h-[calc(100vh-28rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-purple-300 scrollbar-track-gray-100">
               {filteredTasks.map((task) => (
                 <TaskCard
-                  onRemove={onRemove}
-                  onUpdate={onUpdate}
+                  onRemove={removeTask}
+                  onUpdate={updateTask}
                   task={task}
                   key={task.id}
                   onToggle={onToggle}
