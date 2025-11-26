@@ -4,10 +4,12 @@ import type { TaskResponseDTO } from "../types/TaskResponseDTO";
 import type { TaskCreateDTO } from "@/types/TaskCreateDTO";
 import type { TaskUpdateDTO } from "@/types/TaskUpdateDTO";
 import { toast } from "sonner";
+import { type FilterType } from "@/types/FilterType";
 
 export const useTasks = () => {
   const [tasks, setTasks] = useState<TaskResponseDTO[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [filter, setFilter] = useState<FilterType>("all");
 
   const fetchTasks = useCallback(async () => {
     setIsLoading(true);
@@ -70,6 +72,15 @@ export const useTasks = () => {
     }
   }, []);
 
+  const filteredTasks = useMemo(() => {
+    const strategies = {
+      all: () => tasks,
+      completed: () => tasks.filter((task) => task.isDone),
+      pending: () => tasks.filter((task) => !task.isDone),
+    };
+    return (strategies[filter] || strategies.all)();
+  }, [filter, tasks]);
+
   useEffect(() => {
     fetchTasks();
   }, [fetchTasks]);
@@ -82,12 +93,14 @@ export const useTasks = () => {
   }, [tasks]);
 
   return {
-    tasks,
+    filteredTasks,
     isLoading,
     fetchTasks,
     createTask,
     updateTask,
     removeTask,
+    setFilter,
+    filter,
     stats,
   };
 };

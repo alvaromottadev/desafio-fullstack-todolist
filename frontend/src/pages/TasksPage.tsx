@@ -2,11 +2,19 @@ import { StatsCard, TasksDisplay, TaskTitle } from "../components/tasks";
 import { useTasks } from "../hooks/useTasks";
 
 export const TasksPage = () => {
-  const { stats, tasks, updateTask, createTask, removeTask, isLoading } =
-    useTasks();
+  const {
+    stats,
+    filteredTasks,
+    updateTask,
+    createTask,
+    removeTask,
+    isLoading,
+    setFilter,
+    filter,
+  } = useTasks();
 
   const handleToggleTask = async (taskId: string) => {
-    const task = tasks.find((t) => t.id === taskId);
+    const task = filteredTasks.find((t) => t.id === taskId);
     if (task) {
       await updateTask(taskId, { isDone: !task.isDone });
     }
@@ -21,12 +29,14 @@ export const TasksPage = () => {
         <StatsCard value={stats.pending} label="Tarefas Pendentes" />
       </div>
       <TasksDisplay
-        tasks={tasks}
+        filteredTasks={filteredTasks}
         onToggle={handleToggleTask}
         onCreate={createTask}
         onUpdate={updateTask}
         onRemove={removeTask}
         isLoading={isLoading}
+        setFilter={setFilter}
+        filter={filter}
       />
     </div>
   );
